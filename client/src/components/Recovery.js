@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/Username.module.css";
 
 export default function Recovery() {
+  // eslint-disable-next-line
   const [OTP, setOTP] = useState();
   const navigate = useNavigate();
 
