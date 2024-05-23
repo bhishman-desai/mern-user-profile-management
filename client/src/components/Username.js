@@ -23,18 +23,17 @@ export default function Username() {
   });
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="flex flex-col justify-center items-center h-screen">
-        {/* Responsive container for the form */}
+      <div className="flex flex-col justify-center items-center min-h-screen">
         <div
-          className={`${styles.glass} px-4 py-8 md:px-8 md:py-12`}
-          style={{ width: "45%", height: "80vh" }}
+          className={`${styles.glass} p-4 sm:p-8 md:p-12`}
+          style={{ width: "100%", maxWidth: "500px", height: "auto" }}
         >
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Hello Again!</h4>
-            <span className="py-4 text-xl w-full text-center text-gray-500">
+            <h4 className="text-4xl font-bold">Hello Again!</h4>
+            <span className="py-4 text-lg text-center text-gray-500">
               Explore More by connecting with us.
             </span>
           </div>
@@ -44,7 +43,7 @@ export default function Username() {
               <img src={avatar} className={styles.profile_img} alt="avatar" />
             </div>
 
-            <div className="textbox flex flex-col items-center gap-6">
+            <div className="textbox flex flex-col items-center gap-4">
               <input
                 {...formik.getFieldProps("username")}
                 className={styles.textbox}

@@ -24,19 +24,16 @@ export default function Password() {
   });
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
 
-      <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center min-h-screen">
         {/* Responsive container for the form */}
-        <div
-          className={`${styles.glass} px-4 py-8 md:px-8 md:py-12`}
-          style={{ width: "45%", height: "80vh" }}
-        >
+        <div className={`${styles.glass}`}>
           <div className="title flex flex-col items-center">
             {/*Change name to username or email*/}
-            <h4 className="text-5xl font-bold">Hello Bhishman!</h4>
-            <span className="py-4 text-xl w-full text-center text-gray-500">
+            <h4 className="text-4xl sm:text-5xl font-bold">Hello Bhishman!</h4>
+            <span className="py-4 text-lg sm:text-xl w-full text-center text-gray-500">
               Explore More by connecting with us.
             </span>
           </div>
@@ -47,11 +44,11 @@ export default function Password() {
               <img src={avatar} className={styles.profile_img} alt="avatar" />
             </div>
 
-            <div className="textbox flex flex-col items-center gap-6">
+            <div className="textbox flex flex-col items-center gap-4 sm:gap-6">
               <input
                 {...formik.getFieldProps("password")}
                 className={styles.textbox}
-                type="text"
+                type="password"
                 placeholder="Password"
               />
               <button className={styles.btn} type="submit">
