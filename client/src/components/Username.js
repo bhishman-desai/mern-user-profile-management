@@ -6,9 +6,11 @@ import { useFormik } from "formik";
 import { usernameValidate } from "../helper/validate";
 
 import styles from "../styles/Username.module.css";
+import { useAuthStore } from "../store/store";
 
 export default function Username() {
   const navigate = useNavigate();
+  const setUsername = useAuthStore((state) => state.setUsername);
 
   const formik = useFormik({
     initialValues: {
@@ -18,6 +20,7 @@ export default function Username() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
+      setUsername(values.username);
       navigate("/password");
     },
   });
