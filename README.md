@@ -31,7 +31,25 @@ For the User Profile Management feature, this assignment involves several key st
    npm start
   ```
 
+### Environment
+Frontend:
 
+.env
+```
+REACT_APP_SERVER_DOMAIN='<server_domain>' # example 'http://localhost:8080'
+```
+
+Backend:
+
+.config
+```
+export default {
+    JWT_SECRET : "<secret>",
+    EMAIL: "", 
+    PASSWORD : "",
+    ATLAS_URI: "<MONGODB_ATLAS_URI>"
+}
+```
 
 ### Prerequisites
 
