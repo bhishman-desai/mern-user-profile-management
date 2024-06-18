@@ -1,28 +1,44 @@
 import React from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { resetPasswordValidation } from "../helper/validate";
-import { useNavigate } from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 import styles from "../styles/Username.module.css";
+import {useAuthStore} from "../store/store";
+import useFetch from "../hooks/fetch.hook";
+import {resetPassword} from "../helper/helper";
 
 export default function Reset() {
+  const { username } = useAuthStore(state => state.auth);
   const navigate = useNavigate();
+  const [{ isLoading, apiData, status, serverError }] = useFetch('createResetSession')
 
   const formik = useFormik({
     initialValues: {
       password: "",
-      confirm_pwd: "",
+      confirm_password: "",
     },
     validate: resetPasswordValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      // TODO: Make a call to backend to reset password
-      window.alert("Password Reset success!");
-      navigate("/password");
+      let resetPromise = resetPassword({ username, password: values.password })
+
+      await toast.promise(resetPromise, {
+        loading: 'Updating...',
+        success: <b>Reset Successfully...!</b>,
+        error: <b>Could not Reset!</b>
+      });
+
+      console.log(apiData);
+      resetPromise.then(function(){ navigate('/password') })
     },
   });
+
+  if(isLoading) return <h1 className='text-2xl font-bold'>Loading...</h1>;
+  if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
+  if(status && status !== 201) return <Navigate to={'/password'} replace={true}></Navigate>
 
   return (
     <div className="container mx-auto px-4">
@@ -46,7 +62,7 @@ export default function Reset() {
                 placeholder="New Password"
               />
               <input
-                {...formik.getFieldProps("confirm_pwd")}
+                {...formik.getFieldProps("confirm_password")}
                 className={styles.textbox}
                 type="password"
                 placeholder="Repeat Password"

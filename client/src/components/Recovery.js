@@ -1,22 +1,46 @@
-import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 import styles from "../styles/Username.module.css";
+import { useAuthStore } from "../store/store";
+import { generateOTP, verifyOTP } from "../helper/helper";
 
 export default function Recovery() {
-  // eslint-disable-next-line
+  const { username } = useAuthStore((state) => state.auth);
   const [OTP, setOTP] = useState();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    generateOTP(username).then((OTP) => {
+      if (OTP) return toast.success("OTP has been send to your email!");
+      return toast.error("Problem while generating OTP!");
+    });
+  }, [username]);
+
   async function onSubmit(e) {
     e.preventDefault();
-    window.alert("Update Success!");
-    navigate("/reset");
+    try {
+      let { status } = await verifyOTP({ username, code: OTP });
+      if (status === 201) {
+        toast.success("Verify Successfully!");
+        return navigate("/reset");
+      }
+    } catch (error) {
+      return toast.error("Wrong OTP! Check email again!");
+    }
   }
 
   function resendOTP() {
-    // TODO: Implement resend OTP logic
+    let sentPromise = generateOTP(username);
+
+    toast.promise(sentPromise, {
+      loading: "Sending...",
+      success: <b>OTP has been send to your email!</b>,
+      error: <b>Could not Send it!</b>,
+    });
+
+    sentPromise.then((OTP) => {});
   }
 
   return (

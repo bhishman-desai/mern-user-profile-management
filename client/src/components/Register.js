@@ -24,10 +24,11 @@ export default function Register() {
     onSubmit: async (values) => {
       values = await Object.assign(values, { profile: file || "" });
       let registerPromise = registerUser(values);
+
       await toast.promise(registerPromise, {
         loading: "Creating...",
         success: <b>Register Successfully!</b>,
-        error: <b>Could not Register.</b>,
+        error: (err) => <b>{err.error.response?.data?.error}</b>,
       });
 
       registerPromise.then(function () {
@@ -48,7 +49,10 @@ export default function Register() {
 
       <div className="flex flex-col justify-center items-center min-h-screen">
         {/* Responsive container for the form */}
-        <div className={`${styles.glass}`}>
+        <div
+          className={`${styles.glass} p-4 sm:p-8 md:p-12`}
+          style={{ width: "100%", maxWidth: "500px", height: "auto" }}
+        >
           <div className="title flex flex-col items-center">
             <h4 className="text-4xl sm:text-5xl font-bold">Register</h4>
             <span className="py-4 text-lg sm:text-xl w-full text-center text-gray-500">
