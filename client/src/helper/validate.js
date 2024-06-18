@@ -44,7 +44,7 @@ export async function profileValidation(values) {
   return errors;
 }
 
-/** Helper functions */
+/* Helper functions */
 
 /* Validate Password */
 function passwordVerify(errors = {}, values) {
@@ -58,18 +58,17 @@ function passwordVerify(errors = {}, values) {
     errors.password = toast.error("Password Required!");
   } else if (values.password.includes(" ")) {
     errors.password = toast.error("Invalid Password!");
-  } else if (values.password.length < 8) {
+  } else if (
+    values.password.length < 8 ||
+    !specialChars.test(values.password) ||
+    !lowerCase.test(values.password) ||
+    !upperCase.test(values.password) ||
+    !number.test(values.password)
+  ) {
     errors.password = toast.error(
-      "Password must be at least 8 characters long!",
+      "Password must be at least 8 characters long, contain a special character, a lowercase letter, an uppercase letter and a number!",
+      { duration: 6000 },
     );
-  } else if (!specialChars.test(values.password)) {
-    errors.password = toast.error("Password must contain a special character!");
-  } else if (!lowerCase.test(values.password)) {
-    errors.password = toast.error("Password must contain a lowercase letter!");
-  } else if (!upperCase.test(values.password)) {
-    errors.password = toast.error("Password must contain an uppercase letter!");
-  } else if (!number.test(values.password)) {
-    errors.password = toast.error("Password must contain a number!");
   }
 
   return errors;

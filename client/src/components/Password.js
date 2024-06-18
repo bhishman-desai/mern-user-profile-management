@@ -27,11 +27,14 @@ export default function Password() {
         password: values.password,
       });
 
-      await toast.promise(loginPromise, {
-        loading: "Checking...",
-        success: <b>Login Successfully!</b>,
-        error: <b>Password Not Match!</b>,
-      });
+      await toast.promise(
+        loginPromise,
+        {
+          loading: "Checking...",
+          success: <b>Login Successfully!</b>,
+          error: <b>Password Not Match!</b>,
+        }
+      );
 
       loginPromise.then((res) => {
         let { token } = res.data;
@@ -41,7 +44,7 @@ export default function Password() {
     },
   });
 
-  if (isLoading) return <h1 className="text-2xl font-bold">isLoading</h1>;
+  if (isLoading) return <h1 className="text-2xl font-bold">Loading...</h1>;
   if (serverError)
     return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
 

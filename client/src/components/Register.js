@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/Profile.png";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { registerValidation } from "../helper/validate";
 import convertToBase64 from "../helper/convert";
 import styles from "../styles/Username.module.css";
+import { registerUser } from "../helper/helper";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -21,9 +22,17 @@ export default function Register() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      /* TODO: Make a call to backend to register user */
-      window.alert("Registration success!");
-      navigate("/");
+      values = await Object.assign(values, { profile: file || "" });
+      let registerPromise = registerUser(values);
+      await toast.promise(registerPromise, {
+        loading: "Creating...",
+        success: <b>Register Successfully!</b>,
+        error: <b>Could not Register.</b>,
+      });
+
+      registerPromise.then(function () {
+        navigate("/");
+      });
     },
   });
 

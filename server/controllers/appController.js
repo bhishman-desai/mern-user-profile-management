@@ -27,7 +27,7 @@ export async function register(req, res) {
     const existUsername = new Promise((resolve, reject) => {
       UserModel.findOne({ username }, function (err, user) {
         if (err) reject(new Error(err));
-        if (user) reject({ error: "Username already in use!" });
+        if (user) reject("Username already in use!" );
         resolve();
       });
     });
@@ -36,7 +36,7 @@ export async function register(req, res) {
     const existEmail = new Promise((resolve, reject) => {
       UserModel.findOne({ email }, function (err, email) {
         if (err) reject(new Error(err));
-        if (email) reject({ error: "Email already in use!" });
+        if (email) reject("Email already in use!");
         resolve();
       });
     });
@@ -153,7 +153,7 @@ export async function updateUser(req, res) {
       UserModel.updateOne({ _id: userId }, body, function (err, data) {
         if (err) throw err;
 
-        return res.status(201).send({ msg: "Record Updated!" });
+        return res.status(201).send({ message: "Record Updated!" });
       });
     } else {
       return res.status(401).send({ error: "User Not Found!" });
@@ -179,7 +179,7 @@ export async function verifyOTP(req, res) {
   if (parseInt(req.app.locals.OTP) === parseInt(code)) {
     req.app.locals.OTP = null; /* Reset the OTP value */
     req.app.locals.resetSession = true; /* Start session for reset password */
-    return res.status(201).send({ msg: "Verify Successfully!" });
+    return res.status(201).send({ message: "Verify Successfully!" });
   }
   return res.status(400).send({ error: "Invalid OTP" });
 }
@@ -214,7 +214,7 @@ export async function resetPassword(req, res) {
                 function (err, data) {
                   if (err) throw err;
                   req.app.locals.resetSession = false; /* Reset session */
-                  return res.status(201).send({ msg: "Record Updated!" });
+                  return res.status(201).send({ message: "Record Updated!" });
                 }
               );
             })

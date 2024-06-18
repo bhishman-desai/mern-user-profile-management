@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import avatar from "../assets/Profile.png";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { profileValidation } from "../helper/validate";
 import convertToBase64 from "../helper/convert";
@@ -8,26 +8,37 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "../styles/Username.module.css";
 import extend from "../styles/Profile.module.css";
+import useFetch from "../hooks/fetch.hook";
+import { updateUser } from "../helper/helper";
 
 export default function Profile() {
   const [file, setFile] = useState();
+  const [{ isLoading, apiData, serverError }] = useFetch();
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobile: "",
-      address: "",
+      firstName: apiData?.firstName || "",
+      lastName: apiData?.lastName || "",
+      email: apiData?.email || "",
+      mobile: apiData?.mobile || "",
+      address: apiData?.address || "",
     },
     enableReinitialize: true,
     validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      /* TODO: Make a call to backend to update profile */
-      window.alert("Update Success!");
+      values = await Object.assign(values, {
+        profile: file || apiData?.profile || "",
+      });
+      let updatePromise = updateUser(values);
+
+      await toast.promise(updatePromise, {
+        loading: "Updating...",
+        success: <b>Update Successfully!</b>,
+        error: <b>Could not Update!</b>,
+      });
     },
   });
 
@@ -37,8 +48,13 @@ export default function Profile() {
   };
 
   const userLogout = () => {
+    localStorage.clear();
     navigate("/");
   };
+
+  if (isLoading) return <h1 className="text-2xl font-bold">Loading...</h1>;
+  if (serverError)
+    return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
 
   return (
     <div className="container mx-auto px-4">
@@ -57,7 +73,7 @@ export default function Profile() {
             <div className="profile flex justify-center py-4">
               <label htmlFor="profile">
                 <img
-                  src={file || avatar}
+                  src={file || apiData?.profile || avatar}
                   className={`${styles.profile_img} ${extend.profile_img}`}
                   alt="avatar"
                 />

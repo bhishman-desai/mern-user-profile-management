@@ -49,7 +49,7 @@ export const registerMail = async (req, res) => {
     /* Send mail */
     transporter.sendMail(message)
         .then(() => {
-            return res.status(200).send({ msg: "You should receive an email from us."})
+            return res.status(200).send({ message: "You should receive an email from us."})
         })
         .catch(error => res.status(500).send({ error }))
 

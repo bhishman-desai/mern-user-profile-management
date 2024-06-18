@@ -35,7 +35,7 @@ export async function getUser({ username }) {
 export async function registerUser(credentials) {
   try {
     const {
-      data: { message: message },
+      data: { message },
       status,
     } = await axios.post(`/api/register`, credentials);
 
