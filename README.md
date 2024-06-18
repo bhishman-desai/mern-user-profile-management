@@ -1,216 +1,171 @@
-<!--- The following README.md sample file was adapted from https://gist.github.com/PurpleBooth/109311bb0361f32d87a2#file-readme-template-md by Gabriella Mosquera for academic use ---> 
-<!--- You may delete any comments in this sample README.md file. If needing to use as a .txt file then simply delete all comments, edit as needed, and save as a README.txt file --->
+# Assignment 1
 
+For the User Profile Management feature, this assignment involves several key stages. Initially, task flow diagrams are created to map out the user's interactions and ensure a seamless experience. Following this, a low-fidelity prototype, or wireframe, is developed to outline the basic structure and layout, emphasizing functionality over design. Finally, a semi-functional prototype is built using React.
 
+* *Date Created*: 22 MAY 2024
+* *Last Modification Date*: 27 MAY 2024
+* *Prototype’s URL*: https://bhishman-a1-user-profile-management.netlify.app/
+* *Git URL*: https://git.cs.dal.ca/bdesai/csci-5709-assignments
 
-# Assignment
-
-* *Date Created*: 23 MAY 2024
-* *Last Modification Date*: 29 MAY 2024
-* *Lab URL*: https://bhishman-user-profile-management.netlify.app/
-* *Git URL*: <http://example.com/>
 
 
 ## Authors
 
-[Bhishman Desai](bhishman@dal.ca) 
+* [Bhishman Desai] - (bhishman@dal.ca)
+
+
 
 
 ## Getting Started
 
-**[Optional]** If needing to provide the marker with a copy of the project that should run on their local machine for development, testing and/or marking purposes. Please include the following sections.
 
-See deployment for notes on how to deploy the project on a live system.
+### Steps to Set Up the Project
+
+   ```
+   git clone https://git.cs.dal.ca/bdesai/csci-5709-assignments
+
+   cd Assignment1/client
+   
+   npm install
+	
+   npm start
+  ```
+
+
 
 ### Prerequisites
 
-To have a local copy of this lab / assingnment / project up and running on your local machine, you will first need to install the following software / libraries / plug-ins
-
-```
-Give examples or provide a list of the required software / libraries / plug-ins
-
-```
-
-See the following section for detailed step-by-step instructions on how to install this software / libraries / plug-ins
+```  
+Node environment (v20.13.1)
+```  
 
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be, assume the marker just acquired a computer
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo. You may also include a quick example of what the marker should see if the installation of all required software / libraries / plug-ins was successful.
-
-
-
-## Running the tests
-
-If needing to run automated tests, then explain how to run the automated tests for this system. If this section is not needed, ** you may delete **.
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+You'd be able to check if node is installed on your system with the below command.
+  ```
+  node -v
+  ```
+If you see a version number, node is installed on your system.
 
 
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+I deployed my Assignment 1 project using GitHub and Netlify. First, I created a new private repository on GitHub and pushed my project code to it. Then, I imported this repository into Netlify, configured the build settings, and initiated the deployment. The application was successfully deployed and is now live at the [specified link](https://bhishman-a1-user-profile-management.netlify.app/).
 
 
 
 ## Built With
-
-<!--- Provide a list of the frameworks used to build this application, your list should include the name of the framework used, the url where the framework is available for download and what the framework was used for, see the example below --->
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [React](https://react.dev/learn) - The web framework used
+* [npm](https://docs.npmjs.com) - Dependency Management
 
 
 
 ## Sources Used
 
-If in completing your lab / assignment / project you used any interpretation of someone else's code, then provide a list of where the code was implemented, how it was implemented, why it was implemented, and how it was modified. See the sections below for more details.
+### Background.png
+
+The image used in this project was sourced from [Pexels](https://www.pexels.com/).
 
 
-### File Name
+### validate.js
 
-*Lines ## - ##*
+*Lines 50 - 76*
 
-```
-Copy and paste your code on lines mentioned 
+``` js
+function passwordVerify(errors = {}, values) {
+  
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  const lowerCase = /[a-z]/;
+  const upperCase = /[A-Z]/;
+  const number = /[0-9]/;
 
-```
+  if (!values.password) {
+    errors.password = toast.error("Password Required!");
+  } else if (values.password.includes(" ")) {
+    errors.password = toast.error("Invalid Password!");
+  } else if (values.password.length < 8) {
+    errors.password = toast.error(
+      "Password must be at least 8 characters long!",
+    );
+  } else if (!specialChars.test(values.password)) {
+    errors.password = toast.error("Password must contain a special character!");
+  } else if (!lowerCase.test(values.password)) {
+    errors.password = toast.error("Password must contain a lowercase letter!");
+  } else if (!upperCase.test(values.password)) {
+    errors.password = toast.error("Password must contain an uppercase letter!");
+  } else if (!number.test(values.password)) {
+    errors.password = toast.error("Password must contain a number!");
+  }
 
-The code above was created by adapting the code in [NAME](link) as shown below: 
+  return errors;
+}   
+  
+```  
 
-```
-Copy and paste the snippet of code you are referencing
-
-```
-
-- <!---How---> The code in [NAME](link) was implemented by...
-- <!---Why---> [NAME](link)'s Code was used because...
-- <!---How---> [NAME](link)'s Code was modified by...
-
-*Repeat as needed*
-
-
-### File Name
-
-*Lines ## - ##*
-
-```
-Copy and paste your code on lines mentioned 
-
-```
-
-The code above was created by adapting the code in [NAME](link) as shown below: 
-
-```
-Copy and paste the snippet of code you are referencing
-
-```
-
-- <!---How---> The code in [NAME](link) was implemented by...
-- <!---Why---> [NAME](link)'s Code was used because...
-- <!---How---> [NAME](link)'s Code was modified by...
-
-*Repeat as needed*
+The code above was created by adapting the code in [Wiktor Stribiżew](https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a) as shown below:
 
 
+```js
 
-## Artificial Intelligence Tools Used
-If in completing your lab / assignment / project you used any Artificial Intelligence Tools or Plugins, then provide a list of the tools or plugins used, the prompt used, the code generated by the AI, where the code was implemented, how it was implemented, why it was implemented, and how it was modified. See the sections below for more details.
-
-* [Name of Tool](http://www.dropwizard.io/1.0.2/docs/) - The AI Tool used
-* [Name of Tool](http://www.dropwizard.io/1.0.2/docs/) - The AI Plugin used
-* [Name of Tool](http://www.dropwizard.io/1.0.2/docs/) - The AI Tool used
-
-
-### Prompt Used on *NAME OF AI TOOL*
-
-```
-Copy and paste the prompt used 
+"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
 
 ```
 
-The code prompt above was used [NAME](link) to generate the code shown below: 
+[Wiktor Stribiżew](https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a)'s code was used because I wanted to add regex checks for password validation and wanted to make sure that I don't miss out on any edge cases.
 
+[Wiktor Stribiżew](https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a)'s code was modified by breaking down the regex into different regex each serving their own purpose.
+
+### convert.js
+
+*Lines 1 - 15*
+
+``` js
+/* Image to base64 */
+export default function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        }
+
+        fileReader.onerror = (error) => {
+            reject(error)
+        }
+    })
+}
+  
+```  
+
+The code above was created by adapting the code in [Dmitri Pavlutin](https://stackoverflow.com/questions/36280818/how-to-convert-file-to-base64-in-javascript) as shown below:
+
+
+```js
+function getBase64(file) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+     console.log(reader.result);
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
+
+var file = document.querySelector('#files > input[type="file"]').files[0];
+getBase64(file); // prints the base64 string
 ```
-Copy and paste the entirety of the code generated by the AI Tool listed above.
-
-```
-
-#### File Name
-*Lines ## - ##*
-
-```
-Copy and paste your code on the lines mentioned
-
-```
-
-- <!---How---> The code in [NAME](link) was implemented by...
-- <!---Why---> [NAME](link)'s Code was used because...
-- <!---How---> [NAME](link)'s Code was modified by...
 
 
-### Prompt Used on *NAME OF AI TOOL*
 
-```
-Copy and paste the prompt used 
+[Dmitri Pavlutin](https://stackoverflow.com/questions/36280818/how-to-convert-file-to-base64-in-javascript)'s code was used because I wanted to convert file to base64 in JavaScript. This is mainly to let users upload their profile pictures at the time of user registration process.
 
-```
-
-The code prompt above was used [NAME](link) to generate the code shown below: 
-
-```
-Copy and paste the entirety of the code generated by the AI Tool listed above.
-
-```
-
-#### File Name
-*Lines ## - ##*
-
-```
-Copy and paste your code on the lines mentioned
-
-```
-
-- <!---How---> The code in [NAME](link) was implemented by...
-- <!---Why---> [NAME](link)'s Code was used because...
-- <!---How---> [NAME](link)'s Code was modified by...
-
-
-*Repeat as needed*
-
-
+[Dmitri Pavlutin](https://stackoverflow.com/questions/36280818/how-to-convert-file-to-base64-in-javascript)'s code was modified by instead of directly logging the result or error, I wrapped the FileReader operations within a Promise for my use case. This way I was able to use resolve to return the base64 string upon successful reading and reject to handle any errors.
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* I was impressed by Wiktor Stribiżew's approach to password validation using a comprehensive regex pattern. His code inspired me to break down the regex into individual checks to ensure a thorough validation process without missing any edge cases.
+* I am grateful to Dmitri Pavlutin for his clear and effective method of converting a file to base64 in JavaScript. His solution provided the foundation for my implementation, which involved wrapping the FileReader operations within a Promise to better handle asynchronous operations and improve the user experience during the profile picture upload process.
