@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import connect from './database/dBConnection.js';
-import router from './router/route.js';
+import connect from './config/dBConnection.js';
+import apiRoutes from "./router/apiRoutes.js";
+
 
 const app = express();
 
@@ -19,8 +20,8 @@ app.get('/', (req, res) => {
     res.status(201).json("Home GET Request");
 });
 
-/* API routes */
-app.use('/api', router);
+/* API routes starting point */
+app.use('/api', apiRoutes);
 
 /* Start server only when we have valid connection */
 connect().then(() => {
