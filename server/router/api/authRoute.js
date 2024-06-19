@@ -1,10 +1,13 @@
-import { Router } from "express";
+import {Router} from "express";
+
 const router = Router();
 
 /* Import all controllers */
-import * as controller from '../controllers/appController.js';
-import { registerMail } from '../controllers/mailer.js'
-import Auth, { localVariables } from '../middleware/auth.js';
+import * as controller from '../../controllers/appController.js';
+import {registerMail} from '../../controllers/mailer.js'
+import Auth, {localVariables} from '../../middleware/auth.js';
+import ROLES_LIST from "../../config/roles_list.js";
+import verifyRoles from "../../middleware/verifyRoles.js";
 
 /* POST Methods */
 router.route('/register').post(controller.register);
@@ -20,7 +23,7 @@ router.route('/createResetSession').get(controller.createResetSession);
 
 
 /* PUT Methods */
-router.route('/updateuser').put(Auth, controller.updateUser);
+router.route('/updateUser').put(Auth, verifyRoles(ROLES_LIST.Admin), controller.updateUser);
 router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword);
 
 export default router;

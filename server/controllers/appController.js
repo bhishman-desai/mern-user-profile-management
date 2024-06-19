@@ -21,7 +21,7 @@ export async function verifyUser(req, res, next) {
 /* PUT: http://localhost:8080/api/register */
 export async function register(req, res) {
   try {
-    const { username, password, profile, email } = req.body;
+    const { username, password, profile, email, roles } = req.body;
 
     /* Check the existing user */
     const existUsername = new Promise((resolve, reject) => {
@@ -52,6 +52,7 @@ export async function register(req, res) {
                 password: hashedPassword,
                 profile: profile || "",
                 email,
+                roles
               });
 
               /* Return save result as a response */
@@ -91,10 +92,12 @@ export async function login(req, res) {
               return res.status(400).send({ error: "Don't have password." });
 
             /* Create JWT token */
+            const roles = Object.values(user.roles).filter(Boolean);
             const token = jwt.sign(
               {
                 userId: user._id,
                 username: user.username,
+                roles
               },
               ENV.JWT_SECRET,
               { expiresIn: "24h" }

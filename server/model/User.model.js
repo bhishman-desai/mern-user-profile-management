@@ -6,6 +6,14 @@ export const UserSchema = new mongoose.Schema({
         required : [true, "Please provide unique Username"],
         unique: [true, "Username Exist"]
     },
+    roles: {
+        Student: {
+            type: Number,
+            default: 2001
+        },
+        Recruiter: Number,
+        Admin: Number
+    },
     password: {
         type: String,
         required: [true, "Please provide a password"],
