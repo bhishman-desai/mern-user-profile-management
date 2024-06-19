@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import {authenticate} from "./helper";
+import { authenticate, getUser } from "./helper";
 
 /* Validate login page username */
 export async function usernameValidate(values) {
@@ -8,8 +8,14 @@ export async function usernameValidate(values) {
   if (values.username) {
     const { status } = await authenticate(values.username);
 
-    if(status !== 200){
-      errors.exist = toast.error('User does not exist!')
+    if (status !== 200) {
+      errors.exist = toast.error("User does not exist!");
+    } else {
+      const { data } = await getUser({ username: values.username });
+      /* If the selected Role does not match, then throw error */
+      if(!Object.keys(data.roles).includes(values.role)){
+        errors.exist = toast.error("Incorrect Role Selection!");
+      }
     }
   }
 

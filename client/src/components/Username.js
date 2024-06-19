@@ -15,11 +15,13 @@ export default function Username() {
   const formik = useFormik({
     initialValues: {
       username: "",
+      role: "Student", 
     },
     validate: usernameValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
+      /* Handle different roles here if needed */
       setUsername(values.username);
       navigate("/password");
     },
@@ -53,6 +55,14 @@ export default function Username() {
                 type="text"
                 placeholder="Username"
               />
+              <select
+                {...formik.getFieldProps("role")}
+                className={styles.textbox}
+              >
+                <option value="Student">Student</option>
+                <option value="Recruiter">Recruiter</option>
+                <option value="Admin">Admin</option>
+              </select>
               <button className={styles.btn} type="submit">
                 Let's Go
               </button>

@@ -17,17 +17,28 @@ export default function Register() {
       email: "",
       username: "",
       password: "",
+      role: "Student",
     },
     validate: registerValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
+      /* Set role based on dropdown selection */
+      if (values.role === "Recruiter") {
+        values = { ...values, roles: { Recruiter: 1984 } };
+      } else if (values.role === "Admin") {
+        values = { ...values, roles: { Admin: 5150 } };
+      } else {
+        values = { ...values, roles: { Student: 2001 } };
+      }
+
       values = await Object.assign(values, { profile: file || "" });
+
       let registerPromise = registerUser(values);
 
       await toast.promise(registerPromise, {
         loading: "Creating...",
-        success: <b>Register Successfully!</b>,
+        success: <b>Registered Successfully!</b>,
         error: (err) => <b>{err.error.response?.data?.error}</b>,
       });
 
@@ -96,6 +107,14 @@ export default function Register() {
                 type="password"
                 placeholder="Password*"
               />
+              <select
+                {...formik.getFieldProps("role")}
+                className={styles.textbox}
+              >
+                <option value="Student">Student</option>
+                <option value="Recruiter">Recruiter</option>
+                <option value="Admin">Admin</option>
+              </select>
               <button className={styles.btn} type="submit">
                 Register
               </button>
@@ -103,7 +122,7 @@ export default function Register() {
 
             <div className="text-center py-4">
               <span className="text-gray-500">
-                Already Register?{" "}
+                Already Registered?{" "}
                 <Link className="text-red-500" to="/">
                   Login Now
                 </Link>
