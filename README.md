@@ -1,4 +1,4 @@
-# Assignment 1
+# User Profile Management
 
 For the User Profile Management feature, this assignment involves several key stages. Initially, task flow diagrams are created to map out the user's interactions and ensure a seamless experience. Following this, a low-fidelity prototype, or wireframe, is developed to outline the basic structure and layout, emphasizing functionality over design. Finally, a semi-functional prototype is built using React.
 
